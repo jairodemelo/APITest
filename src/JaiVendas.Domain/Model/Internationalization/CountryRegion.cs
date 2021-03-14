@@ -10,6 +10,8 @@ namespace JaiVendas.Domain.Model.Internationalization
     {
         public Guid Id { get; set; }
 
+        public Guid CountryId { get; set; }
+
         public string Code { get; set; }
 
         public string Description { get; set; }
