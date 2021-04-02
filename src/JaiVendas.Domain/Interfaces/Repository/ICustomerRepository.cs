@@ -36,7 +36,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// <summary>
         /// Exclui um Cliente
         /// </summary>
-        void Delete(Guid Id);
+        void Delete(Guid id);
 
     }
 }
