@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JaiVendas.CrossCutting.Infra.Data.Repository
@@ -19,20 +18,20 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
             Db = context;
         }
 
-        public void Add(Customer customer)
+        public async Task Add(Customer customer)
         {
-            Db.Customers
-                .Add(customer);
+            await Db.Customers
+                .AddAsync(customer);
         }
 
-        public void Delete(Guid id)
+        public async void Delete(Guid id)
         {
-            var customer = GetById(id);
+            var customer = await GetById(id);
             Db.Customers
                 .Remove(customer);
         }
 
-        public IEnumerable<Customer> GetAll(string searchText = null)
+        public async Task<IEnumerable<Customer>> GetAll(string searchText = null)
         {
             return string.IsNullOrWhiteSpace(searchText)
                 ? Db.Customers.ToList()
@@ -47,10 +46,10 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                     .ToList();
         }
 
-        public Customer GetById(Guid id)
+        public async Task<Customer> GetById(Guid id)
         {
-            return Db.Customers
-                .FirstOrDefault(e => e.Id == id);
+            return await Db.Customers
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public void Update(Customer customer)
