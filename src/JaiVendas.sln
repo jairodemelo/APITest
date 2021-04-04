@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JaiVendas.Presentation.Web"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JaiVendas.Tests", "JaiVendas.Tests\JaiVendas.Tests.csproj", "{BAAA8906-2638-4E5B-BE63-DB85036AD826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JaiVendas.CrossCutting.Infra.IOC", "JaiVendas.CrossCutting.Infra.IOC\JaiVendas.CrossCutting.Infra.IOC.csproj", "{DD35C625-E6C6-4170-8FFA-E9B449D97359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JaiVendas.CrossCutting.Infra.IOC", "JaiVendas.CrossCutting.Infra.IOC\JaiVendas.CrossCutting.Infra.IOC.csproj", "{DD35C625-E6C6-4170-8FFA-E9B449D97359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JaiVendas.CrossCutting.Infra.Bus", "JaiVendas.CrossCutting.Infra.Bus\JaiVendas.CrossCutting.Infra.Bus.csproj", "{3652692A-A9ED-4066-9FC0-BCAB160B94A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,6 +167,18 @@ Global
 		{DD35C625-E6C6-4170-8FFA-E9B449D97359}.Release|x64.Build.0 = Release|Any CPU
 		{DD35C625-E6C6-4170-8FFA-E9B449D97359}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD35C625-E6C6-4170-8FFA-E9B449D97359}.Release|x86.Build.0 = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|x64.Build.0 = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,6 +194,7 @@ Global
 		{DBA17FD7-1FC6-49EE-937B-6623F08AF94B} = {336A1D88-238A-4881-905B-CE03AF807823}
 		{BAAA8906-2638-4E5B-BE63-DB85036AD826} = {7705588B-5AAE-43F5-AFDF-0DA0EED76041}
 		{DD35C625-E6C6-4170-8FFA-E9B449D97359} = {BF47DAE4-7E2B-4AA9-A5CB-8109E42AEF11}
+		{3652692A-A9ED-4066-9FC0-BCAB160B94A5} = {BF47DAE4-7E2B-4AA9-A5CB-8109E42AEF11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {540967B7-57EA-4723-9125-7949F6123546}

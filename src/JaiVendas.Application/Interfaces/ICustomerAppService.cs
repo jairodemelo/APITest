@@ -1,4 +1,6 @@
-﻿using JaiVendas.Application.ViewModel.Customers;
+﻿using FluentValidation.Results;
+using JaiVendas.Application.ViewModel;
+using JaiVendas.Application.ViewModel.Customers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,17 +29,17 @@ namespace JaiVendas.Application.Interfaces
         /// <summary>
         /// Inclui um Cliente no sistema
         /// </summary>
-        Task Add(CustomerAddViewModel customer);
+        Task<AddResponseViewModel> Add(CustomerAddViewModel customer);
 
         /// <summary>
         /// Altera os dados de um Cliente
         /// </summary>
-        void Update(CustomerUpdateViewModel customer);
+        Task<ValidationResult> Update(CustomerUpdateViewModel customer);
 
         /// <summary>
         /// Exclui um Cliente
         /// </summary>
-        void Delete(Guid id);
+        Task<ValidationResult> Delete(Guid id);
 
     }
 }

@@ -8,5 +8,7 @@ namespace JaiVendas.Application.ViewModel.Customers
 {
     public class CustomerUpdateViewModel
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

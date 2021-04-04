@@ -8,5 +8,7 @@ namespace JaiVendas.Application.ViewModel.Customers
 {
     public class CustomerAddViewModel
     {
+        public string CPF { get; set; }
+        public string Name { get; set; }
     }
 }
