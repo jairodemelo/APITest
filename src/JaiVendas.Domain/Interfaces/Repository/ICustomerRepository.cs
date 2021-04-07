@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,11 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// Exclui um Cliente
         /// </summary>
         void Delete(Guid id);
+
+        /// <summary>
+        /// Retorna true se o cliente existir
+        /// </summary>
+        Task<bool> Exists(Expression<Func<Customer, bool>> predicate);
 
     }
 }

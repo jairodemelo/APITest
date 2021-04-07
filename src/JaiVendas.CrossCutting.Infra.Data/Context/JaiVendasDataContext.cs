@@ -1,5 +1,6 @@
 ﻿using JaiVendas.CrossCutting.Infra.Data.EntityConfig.Customers;
 using JaiVendas.CrossCutting.Infra.Data.EntityConfig.Internationalization;
+using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Model.Customers;
 using JaiVendas.Domain.Model.Internationalization;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace JaiVendas.CrossCutting.Infra.Data.Context
 {
-    public class JaiVendasDataContext: DbContext
+    public class JaiVendasDataContext: DbContext, IUnitOfWork
     {
         public DbSet<Customer> Customers { get; set; }
 
@@ -45,5 +46,8 @@ namespace JaiVendas.CrossCutting.Infra.Data.Context
 
             optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         }
+
+        public async Task<bool> Commit()
+            => await SaveChangesAsync() > 0;
     }
 }

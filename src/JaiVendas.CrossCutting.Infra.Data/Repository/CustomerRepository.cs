@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JaiVendas.CrossCutting.Infra.Data.Repository
@@ -14,9 +15,8 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
         private readonly JaiVendasDataContext Db;
 
         public CustomerRepository(JaiVendasDataContext context)
-        {
-            Db = context;
-        }
+            => Db = context;
+        
 
         public async Task Add(Customer customer)
         {
@@ -31,9 +31,11 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                 .Remove(customer);
         }
 
+        public async Task<bool> Exists(Expression<Func<Customer, bool>> predicate)
+            => await Db.Customers.AnyAsync(predicate);
+
         public async Task<IEnumerable<Customer>> GetAll(string searchText = null)
-        {
-            return string.IsNullOrWhiteSpace(searchText)
+            =>  string.IsNullOrWhiteSpace(searchText)
                 ? Db.Customers.ToList()
                 : Db.Customers
                     .Include(i => i.Phones)
@@ -44,17 +46,14 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                         || e.Phones.Any(p=> p.Number.Contains(searchText))
                     )
                     .ToList();
-        }
-
+        
         public async Task<Customer> GetById(Guid id)
-        {
-            return await Db.Customers
+            => await Db.Customers
                 .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
+        
         public void Update(Customer customer)
-        {
-            Db.Customers.Update(customer);
-        }
+            => Db.Customers.Update(customer);
+        
+
     }
 }
