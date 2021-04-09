@@ -31,6 +31,10 @@ namespace JaiVendas.CrossCutting.Infra.Data.EntityConfig.Customers
                 .IsRequired()
                 .HasMaxLength(300);
 
+            builder.Property(e => e.City)
+                .IsRequired()
+                .HasMaxLength(255);
+
             builder.Property(e => e.ZipCode)
                 .IsRequired()
                 .HasMaxLength(15);

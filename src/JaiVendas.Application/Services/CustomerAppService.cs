@@ -8,7 +8,9 @@ using JaiVendas.Domain.Interfaces.Bus;
 using JaiVendas.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace JaiVendas.Application.Services
 {
@@ -30,12 +32,34 @@ namespace JaiVendas.Application.Services
         public async Task<AddResponseViewModel> Add(CustomerAddViewModel customer)
         {
             var customerAddCommand = _mapper.Map<CustomerAddCommand>(customer);
-            var result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
-            return result.IsValid
-                ? new AddResponseViewModel(customerAddCommand.Id, result)
-                : new AddResponseViewModel(result);
-        }
 
+            //Abre a transação de escopo
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                //Criando cliente
+                var result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
+
+                //Criando Endereços
+                foreach (var address in customer.Adresses)
+                {
+                     var result1Address = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
+                    if (!result1Address.IsValid)
+                    {
+                        result = result1Address;
+                        break;
+                    }
+                }
+
+                //Se inválido
+                if (!result.IsValid)
+                    return new AddResponseViewModel(result);
+
+                //Se validao
+                scope.Complete();
+                return new AddResponseViewModel(customerAddCommand.Id, result);
+            }
+        }
+        
         public async Task<ValidationResult> Update(CustomerUpdateViewModel customer)
         {
             var customerUpdateCommand = _mapper.Map<CustomerUpdateCommand>(customer);

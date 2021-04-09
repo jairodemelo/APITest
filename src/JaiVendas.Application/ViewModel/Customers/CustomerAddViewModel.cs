@@ -10,5 +10,8 @@ namespace JaiVendas.Application.ViewModel.Customers
     {
         public string CPF { get; set; }
         public string Name { get; set; }
+
+        public ICollection<CustomerAddressAddViewModel> Adresses { get; set; } 
+            = new List<CustomerAddressAddViewModel>();
     }
 }

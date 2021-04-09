@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Customers\CustomerPhones\" />
     <Folder Include="DTO\" />
   </ItemGroup>
 
