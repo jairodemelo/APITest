@@ -24,6 +24,16 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                 .AddAsync(customer);
         }
 
+        public async void CustomerAddressDelete(Guid id)
+        {
+            var address = await CustomerAddressGetById(id);
+            Db.CustomerAddresses.Remove(address);
+        }
+
+        public async Task<CustomerAddress> CustomerAddressGetById(Guid id)
+            => await Db.CustomerAddresses
+                .FirstOrDefaultAsync(e => e.Id == id); 
+
         public async void Delete(Guid id)
         {
             var customer = await GetById(id);

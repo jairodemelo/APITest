@@ -3,7 +3,10 @@ using FluentValidation.Results;
 using JaiVendas.Application.Interfaces;
 using JaiVendas.Application.ViewModel;
 using JaiVendas.Application.ViewModel.Customers;
+using JaiVendas.Application.ViewModel.Customers.CustomerAddresses;
+using JaiVendas.CrossCutting.Infra.Environment.Validation;
 using JaiVendas.Domain.Commands.Customers;
+using JaiVendas.Domain.Commands.Customers.CustomerAddresses;
 using JaiVendas.Domain.Interfaces.Bus;
 using JaiVendas.Domain.Interfaces.Repository;
 using System;
@@ -11,7 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
-
 namespace JaiVendas.Application.Services
 {
     public class CustomerAppService : ICustomerAppService
@@ -65,6 +67,48 @@ namespace JaiVendas.Application.Services
             var customerUpdateCommand = _mapper.Map<CustomerUpdateCommand>(customer);
             return await (Task<ValidationResult>)_bus.SendCommand(customerUpdateCommand);
         }
+
+        public async Task<ValidationResult> UpdateCustomerAdresses(Guid customerId,
+            IEnumerable<CustomerAddressAddViewModel> addressesToAdd,
+            IEnumerable<CustomerAddressUpdateViewModel> addressesToUpdate,
+            IEnumerable<CustomerAddressAddViewModel> addressesToDelete)
+        {
+            var cmdAddressesToAdd = _mapper.Map<IEnumerable<CustomerAddressAddCommand>>(addressesToAdd);
+            var cmdAddressesToUpdate = _mapper.Map<IEnumerable<CustomerAddressAddCommand>>(addressesToUpdate);
+            var cmdAddressesToDelete = _mapper.Map<IEnumerable<CustomerAddressAddCommand>>(addressesToDelete);
+
+            //Abre a transação de escopo
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var result = new ValidationResult();
+
+                //Executando comandos de Inclusão
+                foreach (var item in cmdAddressesToAdd)
+                {
+                    var resultAdd = await (Task<ValidationResult>)_bus.SendCommand(item);
+                    result.Join(resultAdd);
+                }
+
+                //Executando comandos de Update
+                foreach (var item in cmdAddressesToUpdate)
+                {
+                    var resultUpdate = await (Task<ValidationResult>)_bus.SendCommand(item);
+                    result.Join(resultUpdate);
+                }
+
+                //Executando comandos de Delete
+                foreach (var item in cmdAddressesToDelete)
+                {
+                    var resultDelete = await (Task<ValidationResult>)_bus.SendCommand(item);
+                    result.Join(resultDelete);
+                }
+
+                if (result.IsValid)
+                    scope.Complete();
+
+                return result;
+            }
+        }    
 
         public async Task<ValidationResult> Delete(Guid id)
         {

@@ -10,7 +10,6 @@ namespace JaiVendas.Domain.Commands.Customers.CustomerAddresses
     public class CustomerAddressUpdateCommand : CustomerAddressCommand
     {
         public CustomerAddressUpdateCommand(Guid id,
-            Guid customerId,
             string street,
             string number,
             string neighborhood,
@@ -20,7 +19,6 @@ namespace JaiVendas.Domain.Commands.Customers.CustomerAddresses
             Guid regionId)
         {
             Id = id;
-            CustomerId = customerId;
             Street = street;
             Number = number;
             Neighborhood = neighborhood;

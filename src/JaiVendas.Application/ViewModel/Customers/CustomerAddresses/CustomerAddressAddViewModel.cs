@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JaiVendas.Application.ViewModel.Customers
+namespace JaiVendas.Application.ViewModel.Customers.CustomerAddresses
 {
     public class CustomerAddressAddViewModel
     {

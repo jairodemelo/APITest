@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JaiVendas.CrossCutting.Infra.Environment\JaiVendas.CrossCutting.Infra.Environment.csproj" />
     <ProjectReference Include="..\JaiVendas.Domain\JaiVendas.Domain.csproj" />
   </ItemGroup>
 

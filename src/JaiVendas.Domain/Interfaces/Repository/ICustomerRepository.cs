@@ -19,6 +19,11 @@ namespace JaiVendas.Domain.Interfaces.Repository
         Task<Customer> GetById(Guid id);
 
         /// <summary>
+        /// Retorna um endereço de cliente pelo seu Id
+        /// </summary>
+        Task<CustomerAddress> CustomerAddressGetById(Guid id);
+
+        /// <summary>
         /// Retorna todos os Clientes cadastrados
         /// </summary>
         /// <returns></returns>
@@ -38,6 +43,12 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// Exclui um Cliente
         /// </summary>
         void Delete(Guid id);
+
+        /// <summary>
+        /// Exclui um endereço de clientye
+        /// </summary>
+        /// <param name="id">Id do endereço do cliente</param>
+        void CustomerAddressDelete(Guid id);
 
         /// <summary>
         /// Retorna true se o cliente existir
