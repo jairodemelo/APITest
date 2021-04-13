@@ -34,7 +34,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Validações de fluxo
             var exists = await _customerRepository
-                .Exists(e => e.Id == request.Id);
+                .Exists<CustomerAddress>(e => e.Id == request.Id);
 
             if (!exists)
                 return AddError("Endereço inexistente!");

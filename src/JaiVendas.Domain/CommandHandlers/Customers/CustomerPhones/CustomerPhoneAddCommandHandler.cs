@@ -1,5 +1,5 @@
 ﻿using FluentValidation.Results;
-using JaiVendas.Domain.Commands.Customers;
+using JaiVendas.Domain.Commands.Customers.CustomerPhones;
 using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Repository;
 using JaiVendas.Domain.Model.Customers;
@@ -11,22 +11,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JaiVendas.Domain.CommandHandlers.Customers
+namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 {
-    public class CustomerAddCommandHandler : CommandHandler, IRequestHandler<CustomerAddCommand, ValidationResult>
+    public class CustomerPhoneAddCommandHandler : CommandHandler, IRequestHandler<CustomerPhoneAddCommand, ValidationResult>
     {
         protected readonly ICustomerRepository _customerRepository;
         protected readonly IUnitOfWork _unitOfWork;
 
-        public CustomerAddCommandHandler(ICustomerRepository customerRepository,
+        public CustomerPhoneAddCommandHandler(ICustomerRepository customerRepository,
             IUnitOfWork unitOfWork)
         {
             _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
         }
-        
 
-        public async Task<ValidationResult> Handle(CustomerAddCommand request, CancellationToken cancellationToken)
+
+        public async Task<ValidationResult> Handle(CustomerPhoneAddCommand request, CancellationToken cancellationToken)
         {
             //Validando dados da entidade
             if (!request.IsValid())
@@ -34,22 +34,23 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
 
             //Validações de fluxo
             var exists = await _customerRepository
-                .Exists<Customer>(e => e.CPF == request.CPF || e.Name == request.Name);
+                .Exists<CustomerPhone>(e => e.Id == request.CustomerId);
 
-            if (exists)
-                return AddError("Já existe um cliente com o mesmo número de CNPJ ou Nome!");
+            if (!exists)
+                return AddError("Cliente inexistente para a adição de Telefone!");
 
             //Cria entidade
-            var customer = new Customer()
+            var customerPhone = new CustomerPhone()
             {
                 Id = Guid.NewGuid(),
-                Active = true,
-                CPF = request.CPF,
-                Name = request.Name
+                CustomerId = request.CustomerId,
+                Area = request.Area,
+                Number = request.Number
             };
 
-            //Persiste o cliente no sistema
-            await _customerRepository.Add(customer);
+            //Consulta instancia do customer
+            var customer = await _customerRepository.GetById(request.CustomerId);
+            customer.Phones.Add(customerPhone);
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();

@@ -7,6 +7,7 @@ using JaiVendas.Application.ViewModel.Customers.CustomerAddresses;
 using JaiVendas.CrossCutting.Infra.Environment.Validation;
 using JaiVendas.Domain.Commands.Customers;
 using JaiVendas.Domain.Commands.Customers.CustomerAddresses;
+using JaiVendas.Domain.Commands.Customers.CustomerPhones;
 using JaiVendas.Domain.Interfaces.Bus;
 using JaiVendas.Domain.Interfaces.Repository;
 using System;
@@ -44,12 +45,17 @@ namespace JaiVendas.Application.Services
                 //Criando Endereços
                 foreach (var address in customer.Adresses)
                 {
-                     var result1Address = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
-                    if (!result1Address.IsValid)
-                    {
-                        result = result1Address;
-                        break;
-                    }
+                    var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
+                    var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
+                    result.Join(resultAddress);
+                }
+
+                //Criando Telefones
+                foreach (var phone in customer.Phones)
+                {
+                    var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
+                    var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
+                    result.Join(resultPhone);
                 }
 
                 //Se inválido

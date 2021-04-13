@@ -2,6 +2,7 @@
 using JaiVendas.Domain.Commands.Customers;
 using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Repository;
+using JaiVendas.Domain.Model.Customers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
                 return request.ValidationResult;
 
             //Validações de fluxo
-            if (await _customerRepository.Exists(e => e.Name == request.Name  && e.Id != request.Id))
+            if (await _customerRepository.Exists<Customer>(e => e.Name == request.Name  && e.Id != request.Id))
                 return AddError("Já existe um cliente com o mesmo número de CNPJ ou Nome!");
 
             var customer = await _customerRepository.GetById(request.Id);

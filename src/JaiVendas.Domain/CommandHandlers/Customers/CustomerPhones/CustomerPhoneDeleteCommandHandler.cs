@@ -1,5 +1,5 @@
 ﻿using FluentValidation.Results;
-using JaiVendas.Domain.Commands.Customers.CustomerAddresses;
+using JaiVendas.Domain.Commands.Customers.CustomerPhones;
 using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Repository;
 using JaiVendas.Domain.Model.Customers;
@@ -11,20 +11,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
+namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 {
-    public class CustomerAddressDeleteCommandHandler : CommandHandler, IRequestHandler<CustomerAddressDeleteCommand, ValidationResult>
+    public class CustomerPhoneDeleteCommandHandler : CommandHandler, IRequestHandler<CustomerPhoneDeleteCommand, ValidationResult>
     {
         protected readonly ICustomerRepository _customerRepository;
         protected readonly IUnitOfWork _unitOfWork;
 
-        public CustomerAddressDeleteCommandHandler(ICustomerRepository customerRepository,
+        public CustomerPhoneDeleteCommandHandler(ICustomerRepository customerRepository,
             IUnitOfWork unitOfWork)
         {
             _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<ValidationResult> Handle(CustomerAddressDeleteCommand request, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(CustomerPhoneDeleteCommand request, CancellationToken cancellationToken)
         {
             //Validando dados da entidade
             if (!request.IsValid())
@@ -32,13 +32,13 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Validações de fluxo
             var exists = await _customerRepository
-                .Exists<CustomerAddress>(e => e.Id == request.Id);
+                .Exists<CustomerPhone>(e => e.Id == request.Id);
 
             if (!exists)
-                return AddError("Endereço inexistente!");
+                return AddError("Telefone inexistente!");
 
             //Realiza a exclusão
-            _customerRepository.CustomerAddressDelete(request.Id);
+            _customerRepository.CustomerPhoneDelete(request.Id);
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();

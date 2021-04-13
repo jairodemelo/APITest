@@ -24,6 +24,11 @@ namespace JaiVendas.Domain.Interfaces.Repository
         Task<CustomerAddress> CustomerAddressGetById(Guid id);
 
         /// <summary>
+        /// Retorna um Telefone de cliente pelo seu Id
+        /// </summary>
+        Task<CustomerPhone> CustomerPhoneGetById(Guid id);
+
+        /// <summary>
         /// Retorna todos os Clientes cadastrados
         /// </summary>
         /// <returns></returns>
@@ -45,6 +50,12 @@ namespace JaiVendas.Domain.Interfaces.Repository
         void Delete(Guid id);
 
         /// <summary>
+        /// Realiza a exclusão de um telefone de cliente pelo seu id
+        /// </summary>
+        /// <param name="id">Id do telefone do cliente</param>
+        void CustomerPhoneDelete(Guid id);
+
+        /// <summary>
         /// Exclui um endereço de clientye
         /// </summary>
         /// <param name="id">Id do endereço do cliente</param>
@@ -53,7 +64,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// <summary>
         /// Retorna true se o cliente existir
         /// </summary>
-        Task<bool> Exists(Expression<Func<Customer, bool>> predicate);
-
+        Task<bool> Exists<TEntity>(Expression<Func<TEntity, bool>> predicate)
+            where TEntity : class;
     }
 }

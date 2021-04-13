@@ -2,6 +2,7 @@
 using JaiVendas.Domain.Commands.Customers;
 using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Repository;
+using JaiVendas.Domain.Model.Customers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
             if (!request.IsValid())
                 return request.ValidationResult;
 
-            var exists = await _customerRepository.Exists(e=> e.Id == request.Id);
+            var exists = await _customerRepository.Exists<Customer>(e=> e.Id == request.Id);
             if (!exists)
                 return AddError("Cliente não encontrado para exclusão!");
 

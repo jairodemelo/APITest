@@ -32,7 +32,17 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
 
         public async Task<CustomerAddress> CustomerAddressGetById(Guid id)
             => await Db.CustomerAddresses
-                .FirstOrDefaultAsync(e => e.Id == id); 
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+        public async void CustomerPhoneDelete(Guid id)
+        {
+            var customerPhone = await CustomerPhoneGetById(id);
+            Db.CustomerPhones.Remove(customerPhone);
+        }
+
+        public async Task<CustomerPhone> CustomerPhoneGetById(Guid id)
+            => await Db.CustomerPhones
+                .FirstOrDefaultAsync(e => e.Id == id);
 
         public async void Delete(Guid id)
         {
@@ -41,8 +51,9 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                 .Remove(customer);
         }
 
-        public async Task<bool> Exists(Expression<Func<Customer, bool>> predicate)
-            => await Db.Customers.AnyAsync(predicate);
+        public async Task<bool> Exists<TEntity>(Expression<Func<TEntity, bool>> predicate)
+            where TEntity : class
+            => await Db.Set<TEntity>().AnyAsync(predicate);
 
         public async Task<IEnumerable<Customer>> GetAll(string searchText = null)
             =>  string.IsNullOrWhiteSpace(searchText)
