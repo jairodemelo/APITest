@@ -62,7 +62,7 @@ namespace JaiVendas.Application.Services
                 if (!result.IsValid)
                     return new AddResponseViewModel(result);
 
-                //Se validao
+                //Se valido
                 scope.Complete();
                 return new AddResponseViewModel(customerAddCommand.Id, result);
             }

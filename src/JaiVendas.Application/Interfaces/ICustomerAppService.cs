@@ -12,7 +12,7 @@ namespace JaiVendas.Application.Interfaces
     /// <summary>
     /// Serviço de clientes
     /// </summary>
-    interface  ICustomerAppService
+    public interface  ICustomerAppService
     {
         /// <summary>
         /// Retorna um cliente por meio de seu Id
