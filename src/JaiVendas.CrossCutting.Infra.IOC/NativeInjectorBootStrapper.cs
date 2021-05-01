@@ -1,8 +1,14 @@
-﻿using JaiVendas.Application.Interfaces;
+﻿using AutoMapper;
+using JaiVendas.Application.AutoMapper;
+using JaiVendas.Application.Interfaces;
 using JaiVendas.Application.Services;
+using JaiVendas.CrossCutting.Infra.Bus;
 using JaiVendas.CrossCutting.Infra.Data.Context;
 using JaiVendas.CrossCutting.Infra.Data.Repository;
+using JaiVendas.Domain.Interfaces;
+using JaiVendas.Domain.Interfaces.Bus;
 using JaiVendas.Domain.Interfaces.Repository;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -12,7 +18,14 @@ namespace JaiVendas.CrossCutting.Infra.IOC
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            var assembly = AppDomain.CurrentDomain.Load("JaiVendas.Domain");
+            var autoMapperConfig = AutoMapperConfig.RegisterMappings();
+
             return services
+
+            //Bus
+            .AddScoped<IMediatorHandler, InMemoryBus>()
+            .AddMediatR(assembly)
 
             //Application
             .AddScoped<ICustomerAppService, CustomerAppService>()
@@ -21,7 +34,11 @@ namespace JaiVendas.CrossCutting.Infra.IOC
             .AddScoped<ICustomerRepository, CustomerRepository>()
 
             //Data
-            .AddScoped<JaiVendasDataContext>();
+            .AddScoped<IUnitOfWork, JaiVendasDataContext>()
+            .AddScoped<JaiVendasDataContext>()
+            
+            //AutoMapper
+            .AddSingleton<IMapper>(autoMapperConfig.CreateMapper());
         }
     }
 }

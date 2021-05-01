@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+	  <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JaiVendas.Application\JaiVendas.Application.csproj" />
+    <ProjectReference Include="..\JaiVendas.CrossCutting.Infra.Bus\JaiVendas.CrossCutting.Infra.Bus.csproj" />
     <ProjectReference Include="..\JaiVendas.CrossCutting.Infra.Data\JaiVendas.CrossCutting.Infra.Data.csproj" />
   </ItemGroup>
 
