@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using JaiVendas.Application.Services;
 using JaiVendas.Application.Interfaces;
+using JaiVendas.Application.ViewModel.Customers;
 
 namespace JaiVendas.API.Controllers
 {
@@ -41,6 +42,33 @@ namespace JaiVendas.API.Controllers
             return result.Any() 
                 ? Ok(result)
                 : NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("v1/[controller]")]
+        public async Task<IActionResult> Add(CustomerAddViewModel customerAdd)
+        {
+            var result = await _customerAppService.Add(customerAdd);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("v1/[controller]/{id}")]
+        public async Task<IActionResult> Add(CustomerUpdateViewModel customerUpdate)
+        {
+            var result = await _customerAppService.Update(customerUpdate);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("v1/[controller]/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _customerAppService.Delete(id);
+            return Ok(result);
         }
     }
 }
