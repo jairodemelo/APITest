@@ -70,6 +70,8 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
         
         public async Task<Customer> GetById(Guid id)
             => await Db.Customers
+                .Include(e=> e.Addresses)
+                .Include(e=> e.Phones)
                 .FirstOrDefaultAsync(e => e.Id == id);
         
         public void Update(Customer customer)

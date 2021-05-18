@@ -42,9 +42,13 @@ namespace JaiVendas.Application.Services
                 //Criando cliente
                 var result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
 
+                if (!result.IsValid)
+                    return new AddResponseViewModel(result);
+
                 //Criando Endereços
                 foreach (var address in customer.Adresses)
                 {
+                    address.CustomerId = customerAddCommand.Id;
                     var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
                     var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
                     result.Join(resultAddress);
@@ -53,6 +57,7 @@ namespace JaiVendas.Application.Services
                 //Criando Telefones
                 foreach (var phone in customer.Phones)
                 {
+                    phone.CustomerId = customerAddCommand.Id;
                     var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
                     var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
                     result.Join(resultPhone);

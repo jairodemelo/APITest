@@ -65,7 +65,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

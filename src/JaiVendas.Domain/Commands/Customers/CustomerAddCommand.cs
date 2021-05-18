@@ -12,6 +12,7 @@ namespace JaiVendas.Domain.Commands.Customers
     {
         public CustomerAddCommand(string cpf, string name)
         {
+            Id = Guid.NewGuid();
             CPF = cpf;
             Name = name;
         }

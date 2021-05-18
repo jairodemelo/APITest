@@ -47,7 +47,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

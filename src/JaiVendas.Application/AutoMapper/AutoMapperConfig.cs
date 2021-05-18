@@ -14,6 +14,7 @@ namespace JaiVendas.Application.AutoMapper
             return new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new DomainToViewModelMappingConfiguration());
+                cfg.AddProfile(new ViewModelToCommandMappingConfiguration());
             });
         }
     }

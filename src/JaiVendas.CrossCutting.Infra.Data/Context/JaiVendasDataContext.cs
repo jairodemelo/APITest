@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace JaiVendas.CrossCutting.Infra.Data.Context
 {
-    public class JaiVendasDataContext: DbContext, IUnitOfWork
+    public class JaiVendasDataContext: DbContext
     {
         public DbSet<Customer> Customers { get; set; }
 
@@ -47,7 +47,5 @@ namespace JaiVendas.CrossCutting.Infra.Data.Context
             optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         }
 
-        public async Task<bool> Commit()
-            => await SaveChangesAsync() > 0;
     }
 }

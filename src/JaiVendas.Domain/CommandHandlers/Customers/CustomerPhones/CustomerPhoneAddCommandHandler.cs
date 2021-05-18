@@ -34,7 +34,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 
             //Validações de fluxo
             var exists = await _customerRepository
-                .Exists<CustomerPhone>(e => e.Id == request.CustomerId);
+                .Exists<Customer>(e => e.Id == request.CustomerId);
 
             if (!exists)
                 return AddError("Cliente inexistente para a adição de Telefone!");
@@ -54,7 +54,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

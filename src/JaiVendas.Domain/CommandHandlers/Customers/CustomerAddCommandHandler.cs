@@ -42,7 +42,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
             //Cria entidade
             var customer = new Customer()
             {
-                Id = Guid.NewGuid(),
+                Id = request.Id,
                 Active = true,
                 CPF = request.CPF,
                 Name = request.Name
@@ -53,7 +53,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

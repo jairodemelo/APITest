@@ -8,6 +8,6 @@ namespace JaiVendas.Domain.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {
-        Task<bool> Commit();
+        bool Commit();
     }
 }

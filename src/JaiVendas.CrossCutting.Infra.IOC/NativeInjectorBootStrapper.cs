@@ -5,6 +5,7 @@ using JaiVendas.Application.Services;
 using JaiVendas.CrossCutting.Infra.Bus;
 using JaiVendas.CrossCutting.Infra.Data.Context;
 using JaiVendas.CrossCutting.Infra.Data.Repository;
+using JaiVendas.CrossCutting.Infra.Data.UOW;
 using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Bus;
 using JaiVendas.Domain.Interfaces.Repository;
@@ -34,7 +35,7 @@ namespace JaiVendas.CrossCutting.Infra.IOC
             .AddScoped<ICustomerRepository, CustomerRepository>()
 
             //Data
-            .AddScoped<IUnitOfWork, JaiVendasDataContext>()
+            .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<JaiVendasDataContext>()
             
             //AutoMapper

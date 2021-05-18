@@ -34,7 +34,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Validações de fluxo
             var exists = await _customerRepository
-                .Exists<CustomerAddress>(e => e.Id == request.CustomerId);
+                .Exists<Customer>(e => e.Id == request.CustomerId);
 
             if (!exists)
                 return AddError("Cliente inexistente para a adição de endereço!");
@@ -59,7 +59,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

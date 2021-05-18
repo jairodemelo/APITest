@@ -42,7 +42,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }

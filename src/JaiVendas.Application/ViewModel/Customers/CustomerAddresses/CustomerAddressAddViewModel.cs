@@ -8,7 +8,7 @@ namespace JaiVendas.Application.ViewModel.Customers.CustomerAddresses
 {
     public class CustomerAddressAddViewModel
     {
-        public Guid CustomerId { get; set; }
+        internal Guid CustomerId { get; set; }
 
         public Guid CountryId { get; set; }
 

@@ -56,7 +56,7 @@ namespace JaiVendas.API.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("v1/[controller]/{id}")]
-        public async Task<IActionResult> Add(CustomerUpdateViewModel customerUpdate)
+        public async Task<IActionResult> Update(CustomerUpdateViewModel customerUpdate)
         {
             var result = await _customerAppService.Update(customerUpdate);
             return Ok(result);

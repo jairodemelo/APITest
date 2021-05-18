@@ -36,7 +36,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
                 return AddError("Cliente não encontrado para exclusão!");
 
             _customerRepository.Delete(request.Id);
-            return await Commit(_unitOfWork);
+            return Commit(_unitOfWork);
         }
     }
 }
