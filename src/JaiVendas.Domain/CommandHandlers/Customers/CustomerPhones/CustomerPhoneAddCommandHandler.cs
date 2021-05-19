@@ -46,7 +46,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
             };
 
             //Consulta instancia do customer
-            var customer = await _customerRepository.GetById(request.CustomerId);
+            var customer = _customerRepository.GetById(request.CustomerId);
             customer.Phones.Add(customerPhone);
 
             //Salva as alterações

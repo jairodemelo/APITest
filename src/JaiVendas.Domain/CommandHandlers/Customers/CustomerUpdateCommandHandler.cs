@@ -32,7 +32,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
             if (await _customerRepository.Exists<Customer>(e => e.Name == request.Name  && e.Id != request.Id))
                 return AddError("Já existe um cliente com o mesmo número de CNPJ ou Nome!");
 
-            var customer = await _customerRepository.GetById(request.Id);
+            var customer = _customerRepository.GetById(request.Id);
             if (customer == null)
                 return AddError($"O cliente '{request.Id}' não existe!");
 

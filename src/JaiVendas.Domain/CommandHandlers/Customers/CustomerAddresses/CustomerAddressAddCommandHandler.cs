@@ -50,9 +50,8 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
                 ZipCode = request.ZipCode
             };
 
-            //Consulta instancia do customer
-            var customer = await _customerRepository.GetById(request.CustomerId);
-            customer.Addresses.Add(customerAddress);
+            //Incluindo endereço
+            _customerRepository.CustomerAddressAdd(customerAddress);
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();

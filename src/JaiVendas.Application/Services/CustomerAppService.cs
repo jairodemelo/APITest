@@ -135,7 +135,7 @@ namespace JaiVendas.Application.Services
 
         public async Task<CustomerViewModel> GetById(Guid id)
         {
-            var result = await _customerRepository.GetById(id);
+            var result = _customerRepository.GetById(id);
             return _mapper.Map<CustomerViewModel>(result);
         }
     }

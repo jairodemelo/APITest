@@ -48,9 +48,9 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
             => await Db.CustomerPhones
                 .FirstOrDefaultAsync(e => e.Id == id);
 
-        public async void Delete(Guid id)
+        public void Delete(Guid id)
         {
-            var customer = await GetById(id);
+            var customer =  GetById(id);
             Db.Customers
                 .Remove(customer);
         }
@@ -59,8 +59,9 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
             where TEntity : class
             => await Db.Set<TEntity>().AnyAsync(predicate);
 
-        public async Task<IEnumerable<Customer>> GetAll(string searchText = null)
-            =>  string.IsNullOrWhiteSpace(searchText)
+        public Task<IEnumerable<Customer>> GetAll(string searchText = null)
+            =>  Task.FromResult<IEnumerable<Customer>>(
+                string.IsNullOrWhiteSpace(searchText)
                 ? Db.Customers.ToList()
                 : Db.Customers
                     .Include(i => i.Phones)
@@ -70,13 +71,16 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
                         || e.CPF.Contains(searchText) 
                         || e.Phones.Any(p=> p.Number.Contains(searchText))
                     )
-                    .ToList();
+                    .ToList());
         
-        public async Task<Customer> GetById(Guid id)
-            => await Db.Customers
+        public Customer GetById(Guid id)
+            => Db.Customers
                 .Include(e=> e.Addresses)
                 .Include(e=> e.Phones)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .FirstOrDefault(e => e.Id == id);
+
+        public void CustomerAddressAdd(CustomerAddress customerAddress)
+            => Db.CustomerAddresses.Add(customerAddress);
         
         public void Update(Customer customer)
             => Db.Customers.Update(customer);

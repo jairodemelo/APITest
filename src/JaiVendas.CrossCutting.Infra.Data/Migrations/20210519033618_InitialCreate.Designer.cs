@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JaiVendas.CrossCutting.Infra.Data.Migrations
 {
     [DbContext(typeof(JaiVendasDataContext))]
-    [Migration("20210501025408_AlterTableCustomerAddressColumnCity")]
-    partial class AlterTableCustomerAddressColumnCity
+    [Migration("20210519033618_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JaiVendas.Domain.Model.Customers.Customer", b =>
@@ -200,19 +200,16 @@ namespace JaiVendas.CrossCutting.Infra.Data.Migrations
                     b.HasOne("JaiVendas.Domain.Model.Internationalization.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("JaiVendas.Domain.Model.Customers.Customer", null)
                         .WithMany("Addresses")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("JaiVendas.Domain.Model.Internationalization.CountryRegion", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Country");
@@ -225,7 +222,6 @@ namespace JaiVendas.CrossCutting.Infra.Data.Migrations
                     b.HasOne("JaiVendas.Domain.Model.Customers.Customer", null)
                         .WithMany("Phones")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

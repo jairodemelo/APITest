@@ -16,7 +16,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// <summary>
         /// Retorna um cliente por meio de seu Id
         /// </summary>
-        Task<Customer> GetById(Guid id);
+        Customer GetById(Guid id);
 
         /// <summary>
         /// Retorna um endereço de cliente pelo seu Id
@@ -66,5 +66,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// </summary>
         Task<bool> Exists<TEntity>(Expression<Func<TEntity, bool>> predicate)
             where TEntity : class;
+
+        void CustomerAddressAdd(CustomerAddress customerAddress);
     }
 }

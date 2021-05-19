@@ -56,7 +56,7 @@ namespace JaiVendas.CrossCutting.Infra.Data.Migrations
                     Street = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Number = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Neighborhood = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ZipCode = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -69,19 +69,19 @@ namespace JaiVendas.CrossCutting.Infra.Data.Migrations
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "CountryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CustomerAddresses_CountryRegions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "CountryRegions",
                         principalColumn: "CountryRegionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CustomerAddresses_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,7 +101,7 @@ namespace JaiVendas.CrossCutting.Infra.Data.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
