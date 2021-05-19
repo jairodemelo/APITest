@@ -16,13 +16,10 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
     public class CustomerDeleteCommandHandler : CommandHandler, IRequestHandler<CustomerDeleteCommand, ValidationResult>
     {
         protected readonly ICustomerRepository _customerRepository;
-        protected readonly IUnitOfWork _unitOfWork;
 
-        public CustomerDeleteCommandHandler(ICustomerRepository customerRepository,
-            IUnitOfWork unitOfWork)
+        public CustomerDeleteCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<ValidationResult> Handle(CustomerDeleteCommand request, CancellationToken cancellationToken)
@@ -36,7 +33,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers
                 return AddError("Cliente não encontrado para exclusão!");
 
             _customerRepository.Delete(request.Id);
-            return Commit(_unitOfWork);
+            return await Commit(_customerRepository.UnitOfWork);
         }
     }
 }

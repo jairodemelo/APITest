@@ -16,13 +16,10 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
     public class CustomerAddressAddCommandHandler : CommandHandler, IRequestHandler<CustomerAddressAddCommand, ValidationResult>
     {
         protected readonly ICustomerRepository _customerRepository;
-        protected readonly IUnitOfWork _unitOfWork;
 
-        public CustomerAddressAddCommandHandler(ICustomerRepository customerRepository,
-            IUnitOfWork unitOfWork)
+        public CustomerAddressAddCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
-            _unitOfWork = unitOfWork;
         }
 
 
@@ -59,7 +56,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return Commit(_unitOfWork);
+            return await Commit(_customerRepository.UnitOfWork);
         }
     }
 }

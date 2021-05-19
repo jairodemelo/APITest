@@ -11,7 +11,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
     /// <summary>
     /// Repositório de Clientes
     /// </summary>
-    public interface ICustomerRepository
+    public interface ICustomerRepository : IRepository<Customer>
     {
         /// <summary>
         /// Retorna um cliente por meio de seu Id
@@ -37,7 +37,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
         /// <summary>
         /// Inclui um Cliente no sistema
         /// </summary>
-        Task Add(Customer customer);
+        void Add(Customer customer);
 
         /// <summary>
         /// Altera os dados de um Cliente

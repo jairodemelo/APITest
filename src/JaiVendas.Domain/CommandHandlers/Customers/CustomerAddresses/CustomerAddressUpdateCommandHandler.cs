@@ -17,13 +17,11 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
     {
 
         protected readonly ICustomerRepository _customerRepository;
-        protected readonly IUnitOfWork _unitOfWork;
 
         public CustomerAddressUpdateCommandHandler(ICustomerRepository customerRepository,
             IUnitOfWork unitOfWork)
         {
             _customerRepository = customerRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<ValidationResult> Handle(CustomerAddressUpdateCommand request, CancellationToken cancellationToken)
@@ -65,7 +63,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerAddresses
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return Commit(_unitOfWork);
+            return await Commit(_customerRepository.UnitOfWork);
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace JaiVendas.CrossCutting.Infra.Data.Context
 {
-    public class JaiVendasDataContext: DbContext
+    public class JaiVendasDataContext: DbContext, IUnitOfWork
     {
         public DbSet<Customer> Customers { get; set; }
 
@@ -34,6 +34,15 @@ namespace JaiVendas.CrossCutting.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new CustomerPhoneConfig());
             modelBuilder.ApplyConfiguration(new CountryConfig());
             modelBuilder.ApplyConfiguration(new CountryRegionConfig());
+
+            var fks = modelBuilder.Model
+                .GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys());
+
+            foreach (var rel in fks)
+                rel.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -46,6 +55,9 @@ namespace JaiVendas.CrossCutting.Infra.Data.Context
 
             optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         }
+
+        public async Task<bool> Commit()
+            => await SaveChangesAsync() > 0;
 
     }
 }

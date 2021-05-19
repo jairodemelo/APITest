@@ -1,4 +1,5 @@
 ﻿using JaiVendas.CrossCutting.Infra.Data.Context;
+using JaiVendas.Domain.Interfaces;
 using JaiVendas.Domain.Interfaces.Repository;
 using JaiVendas.Domain.Model.Customers;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +15,17 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
     {
         private readonly JaiVendasDataContext Db;
 
+        public IUnitOfWork UnitOfWork 
+            => Db;
+
         public CustomerRepository(JaiVendasDataContext context)
             => Db = context;
         
 
-        public async Task Add(Customer customer)
+        public void Add(Customer customer)
         {
-            await Db.Customers
-                .AddAsync(customer);
+            Db.Customers
+                .Add(customer);
         }
 
         public async void CustomerAddressDelete(Guid id)

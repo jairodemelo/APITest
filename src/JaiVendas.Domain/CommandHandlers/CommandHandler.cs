@@ -21,15 +21,16 @@ namespace JaiVendas.Domain.CommandHandlers
             return ValidationResult;
         }
 
-        private ValidationResult Commit(IUnitOfWork uow, string message)
+        private async Task<ValidationResult> Commit(IUnitOfWork uow, string message)
         {
-            if (!uow.Commit())
+            if (!await uow.Commit())
                 AddError(message);
 
             return ValidationResult;
         }
 
-        protected ValidationResult Commit(IUnitOfWork uow)
-            => Commit(uow, "There was an error saving data!");
+        protected async Task<ValidationResult> Commit(IUnitOfWork uow)
+            => await Commit(uow, "There was an error saving data!")
+                .ConfigureAwait(false);
     }
 }

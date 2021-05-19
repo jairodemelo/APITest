@@ -15,13 +15,10 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
     public class CustomerPhoneUpdateCommandHandler : CommandHandler, IRequestHandler<CustomerPhoneUpdateCommand, ValidationResult>
     {
         protected readonly ICustomerRepository _customerRepository;
-        protected readonly IUnitOfWork _unitOfWork;
 
-        public CustomerPhoneUpdateCommandHandler(ICustomerRepository customerRepository,
-            IUnitOfWork unitOfWork)
+        public CustomerPhoneUpdateCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
-            _unitOfWork = unitOfWork;
         }
 
 
@@ -45,7 +42,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();
-            return Commit(_unitOfWork);
+            return await Commit(_customerRepository.UnitOfWork);
         }
     }
 }

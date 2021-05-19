@@ -16,8 +16,8 @@ namespace JaiVendas.CrossCutting.Infra.Data.UOW
         {
             _context = context;
         }
-        public bool Commit()
-            => _context.SaveChanges() > 0;
+        public async Task<bool> Commit()
+            => await _context.SaveChangesAsync() > 0;
 
         public void Dispose()
             => _context.Dispose();
