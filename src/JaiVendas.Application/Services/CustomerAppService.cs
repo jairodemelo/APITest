@@ -37,46 +37,30 @@ namespace JaiVendas.Application.Services
             var customerAddCommand = _mapper.Map<CustomerAddCommand>(customer);
 
             //Abre a transação de escopo
-            using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionScopeAsyncFlowOption.Enabled))
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var result = new ValidationResult();
-                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                //Criando cliente
+                var result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
+
+                if (!result.IsValid)
+                    return new AddResponseViewModel(result);
+
+                //Criando Endereços
+                foreach (var address in customer.Adresses)
                 {
-                    //Criando cliente
-                    result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
-
-                    if (!result.IsValid)
-                        return new AddResponseViewModel(result);
-
-                    internalScope.Complete();
+                    address.CustomerId = customerAddCommand.Id;
+                    var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
+                    var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
+                    result.Join(resultAddress);
                 }
 
-                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                //Criando Telefones
+                foreach (var phone in customer.Phones)
                 {
-                    //Criando Endereços
-                    foreach (var address in customer.Adresses)
-                    {
-                        address.CustomerId = customerAddCommand.Id;
-                        var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
-                        var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
-                        result.Join(resultAddress);
-                    }
-
-                    internalScope.Complete();
-                }
-
-                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                {
-                    //Criando Telefones
-                    foreach (var phone in customer.Phones)
-                    {
-                        phone.CustomerId = customerAddCommand.Id;
-                        var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
-                        var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
-                        result.Join(resultPhone);
-                    }
-
-                    internalScope.Complete();
+                    phone.CustomerId = customerAddCommand.Id;
+                    var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
+                    var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
+                    result.Join(resultPhone);
                 }
 
                 //Se inválido
