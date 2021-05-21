@@ -37,30 +37,46 @@ namespace JaiVendas.Application.Services
             var customerAddCommand = _mapper.Map<CustomerAddCommand>(customer);
 
             //Abre a transação de escopo
-            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionScopeAsyncFlowOption.Enabled))
             {
-                //Criando cliente
-                var result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
-
-                if (!result.IsValid)
-                    return new AddResponseViewModel(result);
-
-                //Criando Endereços
-                foreach (var address in customer.Adresses)
+                var result = new ValidationResult();
+                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    address.CustomerId = customerAddCommand.Id;
-                    var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
-                    var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
-                    result.Join(resultAddress);
+                    //Criando cliente
+                    result = await (Task<ValidationResult>)_bus.SendCommand(customerAddCommand);
+
+                    if (!result.IsValid)
+                        return new AddResponseViewModel(result);
+
+                    internalScope.Complete();
                 }
 
-                //Criando Telefones
-                foreach (var phone in customer.Phones)
+                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    phone.CustomerId = customerAddCommand.Id;
-                    var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
-                    var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
-                    result.Join(resultPhone);
+                    //Criando Endereços
+                    foreach (var address in customer.Adresses)
+                    {
+                        address.CustomerId = customerAddCommand.Id;
+                        var customerAddressAddCommand = _mapper.Map<CustomerAddressAddCommand>(address);
+                        var resultAddress = await (Task<ValidationResult>)_bus.SendCommand(customerAddressAddCommand);
+                        result.Join(resultAddress);
+                    }
+
+                    internalScope.Complete();
+                }
+
+                using (var internalScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    //Criando Telefones
+                    foreach (var phone in customer.Phones)
+                    {
+                        phone.CustomerId = customerAddCommand.Id;
+                        var customerPhoneAddCommand = _mapper.Map<CustomerPhoneAddCommand>(phone);
+                        var resultPhone = await (Task<ValidationResult>)_bus.SendCommand(customerPhoneAddCommand);
+                        result.Join(resultPhone);
+                    }
+
+                    internalScope.Complete();
                 }
 
                 //Se inválido
@@ -72,7 +88,7 @@ namespace JaiVendas.Application.Services
                 return new AddResponseViewModel(customerAddCommand.Id, result);
             }
         }
-        
+
         public async Task<ValidationResult> Update(CustomerUpdateViewModel customer)
         {
             var customerUpdateCommand = _mapper.Map<CustomerUpdateCommand>(customer);
@@ -119,7 +135,7 @@ namespace JaiVendas.Application.Services
 
                 return result;
             }
-        }    
+        }
 
         public async Task<ValidationResult> Delete(Guid id)
         {

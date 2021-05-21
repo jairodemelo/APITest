@@ -45,9 +45,7 @@ namespace JaiVendas.Domain.CommandHandlers.Customers.CustomerPhones
                 Number = request.Number
             };
 
-            //Consulta instancia do customer
-            var customer = _customerRepository.GetById(request.CustomerId);
-            customer.Phones.Add(customerPhone);
+            _customerRepository.CustomerPhoneAdd(customerPhone);
 
             //Salva as alterações
             cancellationToken.ThrowIfCancellationRequested();

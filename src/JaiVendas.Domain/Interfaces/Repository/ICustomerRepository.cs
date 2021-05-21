@@ -68,5 +68,7 @@ namespace JaiVendas.Domain.Interfaces.Repository
             where TEntity : class;
 
         void CustomerAddressAdd(CustomerAddress customerAddress);
+
+        void CustomerPhoneAdd(CustomerPhone customerPhone);
     }
 }

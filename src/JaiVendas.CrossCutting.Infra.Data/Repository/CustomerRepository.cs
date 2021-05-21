@@ -84,7 +84,8 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
         
         public void Update(Customer customer)
             => Db.Customers.Update(customer);
-        
 
+        public void CustomerPhoneAdd(CustomerPhone customerPhone)
+         => Db.CustomerPhones.Add(customerPhone);
     }
 }
