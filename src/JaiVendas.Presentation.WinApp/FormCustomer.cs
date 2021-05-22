@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace JaiVendas.Presentation.WinApp
 {
-    public partial class Form1 : Form
+    public partial class FormCustomer : Form
     {
-        public Form1()
+        public FormCustomer()
         {
             InitializeComponent();
         }
-
     }
 }
