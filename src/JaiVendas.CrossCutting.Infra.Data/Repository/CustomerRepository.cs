@@ -50,7 +50,19 @@ namespace JaiVendas.CrossCutting.Infra.Data.Repository
 
         public void Delete(Guid id)
         {
-            var customer =  GetById(id);
+            var customer = GetById(id);
+
+            //Removendo endereços do cliente
+            customer
+                .Addresses.ToList()
+                .ForEach(e=> Db.CustomerAddresses.Remove(e));
+
+            //Removendo telefones do cliente
+            customer
+                .Phones.ToList()
+                .ForEach(e => Db.CustomerPhones.Remove(e));
+
+            //Remove o cliente
             Db.Customers
                 .Remove(customer);
         }
