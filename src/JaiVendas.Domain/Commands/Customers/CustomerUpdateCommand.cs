@@ -18,8 +18,7 @@ namespace JaiVendas.Domain.Commands.Customers
         public override bool IsValid()
         {
             ValidationResult = new CustomerUpdateValidation().Validate(this);
-            return ValidationResult.IsValid
-                ;
+            return ValidationResult.IsValid;
         }
     }
 }
