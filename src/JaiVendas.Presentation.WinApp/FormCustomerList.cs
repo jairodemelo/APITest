@@ -21,10 +21,13 @@ namespace JaiVendas.Presentation.WinApp
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
+            => DoSearch();
+
+        private async void DoSearch()
         {
             using (new LockControl(this))
             {
-                var customers = _customerAppService.GetAll();
+                var customers = await _customerAppService.GetAll();
                 dataGridViewCustomers.DataSource = customers;
             }
         }
