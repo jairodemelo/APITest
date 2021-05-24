@@ -50,7 +50,7 @@ namespace JaiVendas.Presentation.WinApp
             return services
                 .AddSingleton<FormMain>()
                 .AddTransient<FormCustomerList>()
-                .AddTransient<FormCustomer>();
+                .AddTransient<FormCustomerEdit>();
         }
 
     }

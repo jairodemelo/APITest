@@ -14,10 +14,14 @@ namespace JaiVendas.Presentation.WinApp
     public partial class FormCustomerList : Form
     {
         private readonly ICustomerAppService _customerAppService;
-        public FormCustomerList(ICustomerAppService customerAppService)
+        private readonly FormCustomerEdit _formCustomerEdit;
+
+        public FormCustomerList(ICustomerAppService customerAppService, 
+            FormCustomerEdit formCustomerEdit)
         {
             _customerAppService = customerAppService;
-            InitializeComponent();
+            _formCustomerEdit = formCustomerEdit;
+            InitializeComponent();   
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -30,6 +34,27 @@ namespace JaiVendas.Presentation.WinApp
                 var customers = await _customerAppService.GetAll();
                 dataGridViewCustomers.DataSource = customers;
             }
+        }
+
+        private void dataGridViewCustomers_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (sender != dataGridViewCustomers 
+                || dataGridViewCustomers.SelectedRows.Count == 0)
+                return;
+
+            var selectedId = dataGridViewCustomers
+                .SelectedRows[0].Cells["colId"].Value.ToString();
+
+            if (Guid.TryParse(selectedId, out var id))
+                EditCustomer(id);
+
+        }
+
+        private void EditCustomer(Guid id)
+        {
+            _formCustomerEdit.LoadCustomer(id);
+            _formCustomerEdit.ShowDialog();
+            DoSearch();
         }
     }
 }
