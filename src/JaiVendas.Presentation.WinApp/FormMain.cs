@@ -8,19 +8,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JaiVendas.Presentation.WinApp
 {
     public partial class FormMain : Form
     {
-        private readonly ICustomerAppService _customerAppService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public FormMain(ICustomerAppService customerAppService)
+        public FormMain(IServiceProvider serviceProvider)
         {
-            _customerAppService = customerAppService;
-            var customers = _customerAppService.GetAll();
+            _serviceProvider = serviceProvider;
             InitializeComponent();
         }
 
+        private void tsFileClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void tsCustomers_Click(object sender, EventArgs e)
+        {
+            var formCustomerList = _serviceProvider.GetService<FormCustomerList>();
+            formCustomerList.MdiParent = this;
+            formCustomerList.Show();
+        }
     }
 }

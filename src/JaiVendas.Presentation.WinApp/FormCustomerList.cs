@@ -18,7 +18,15 @@ namespace JaiVendas.Presentation.WinApp
         {
             _customerAppService = customerAppService;
             InitializeComponent();
+        }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            using (new LockControl(this))
+            {
+                var customers = _customerAppService.GetAll();
+                dataGridViewCustomers.DataSource = customers;
+            }
         }
     }
 }
