@@ -30,20 +30,20 @@ namespace JaiVendas.Presentation.WinApp
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkActive = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtVatNumber = new System.Windows.Forms.TextBox();
             this.groupAddresses = new System.Windows.Forms.GroupBox();
-            this.groupPhones = new System.Windows.Forms.GroupBox();
-            this.chkActive = new System.Windows.Forms.CheckBox();
             this.dgvAddresses = new System.Windows.Forms.DataGridView();
+            this.groupPhones = new System.Windows.Forms.GroupBox();
             this.dgvPhones = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             this.groupAddresses.SuspendLayout();
-            this.groupPhones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAddresses)).BeginInit();
+            this.groupPhones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhones)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,6 +63,16 @@ namespace JaiVendas.Presentation.WinApp
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Customer Data";
+            // 
+            // chkActive
+            // 
+            this.chkActive.AutoSize = true;
+            this.chkActive.Location = new System.Drawing.Point(6, 91);
+            this.chkActive.Name = "chkActive";
+            this.chkActive.Size = new System.Drawing.Size(59, 19);
+            this.chkActive.TabIndex = 7;
+            this.chkActive.Text = "Active";
+            this.chkActive.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -97,6 +107,7 @@ namespace JaiVendas.Presentation.WinApp
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtVatNumber
             // 
@@ -118,28 +129,6 @@ namespace JaiVendas.Presentation.WinApp
             this.groupAddresses.TabStop = false;
             this.groupAddresses.Text = "Addresses";
             // 
-            // groupPhones
-            // 
-            this.groupPhones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupPhones.Controls.Add(this.dgvPhones);
-            this.groupPhones.Location = new System.Drawing.Point(12, 296);
-            this.groupPhones.Name = "groupPhones";
-            this.groupPhones.Size = new System.Drawing.Size(672, 111);
-            this.groupPhones.TabIndex = 2;
-            this.groupPhones.TabStop = false;
-            this.groupPhones.Text = "Phones";
-            // 
-            // chkActive
-            // 
-            this.chkActive.AutoSize = true;
-            this.chkActive.Location = new System.Drawing.Point(6, 91);
-            this.chkActive.Name = "chkActive";
-            this.chkActive.Size = new System.Drawing.Size(59, 19);
-            this.chkActive.TabIndex = 7;
-            this.chkActive.Text = "Active";
-            this.chkActive.UseVisualStyleBackColor = true;
-            // 
             // dgvAddresses
             // 
             this.dgvAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -151,6 +140,18 @@ namespace JaiVendas.Presentation.WinApp
             this.dgvAddresses.RowTemplate.Height = 25;
             this.dgvAddresses.Size = new System.Drawing.Size(571, 88);
             this.dgvAddresses.TabIndex = 0;
+            // 
+            // groupPhones
+            // 
+            this.groupPhones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupPhones.Controls.Add(this.dgvPhones);
+            this.groupPhones.Location = new System.Drawing.Point(12, 296);
+            this.groupPhones.Name = "groupPhones";
+            this.groupPhones.Size = new System.Drawing.Size(672, 111);
+            this.groupPhones.TabIndex = 2;
+            this.groupPhones.TabStop = false;
+            this.groupPhones.Text = "Phones";
             // 
             // dgvPhones
             // 
@@ -177,8 +178,8 @@ namespace JaiVendas.Presentation.WinApp
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupAddresses.ResumeLayout(false);
-            this.groupPhones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAddresses)).EndInit();
+            this.groupPhones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhones)).EndInit();
             this.ResumeLayout(false);
 

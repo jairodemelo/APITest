@@ -22,5 +22,18 @@ namespace JaiVendas.CrossCutting.Infra.Environment.Validation
 
             return source;
         }
+        
+        /// <summary>
+        /// Obtem erros no formato string concatenados
+        /// </summary>
+        public static string GetErrorMessage(this ValidationResult source)
+        {
+            if (source?.IsValid ?? true)
+                return string.Empty;
+
+            var errors = source.Errors.Select(e => e.ErrorMessage);
+            return string.Join("\n", errors);
+            
+        }
     }
 }

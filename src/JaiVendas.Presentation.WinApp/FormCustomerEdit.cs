@@ -1,4 +1,6 @@
 ﻿using JaiVendas.Application.Interfaces;
+using JaiVendas.Application.ViewModel.Customers;
+using JaiVendas.CrossCutting.Infra.Environment.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +56,38 @@ namespace JaiVendas.Presentation.WinApp
                 }
                 else
                     ClearScreen<TControl>(ctrl);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+            => DoSave();
+
+        private CustomerUpdateViewModel GetCustomerFromForm()
+         => new CustomerUpdateViewModel 
+         {
+             Id = _customerId,
+             Name = txtName.Text
+         };
+
+        private async void DoSave()
+        {
+            using (new LockControl(this))
+            {
+                var customerUpdate = GetCustomerFromForm();
+                var result = await _customerAppService.Update(customerUpdate);
+
+                //Se ocorrerem erros de validacao
+                if (!result.IsValid)
+                {
+                    MessageBox.Show(this, result.GetErrorMessage(),
+                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+                //Sucesso
+                MessageBox.Show(this, "Customer was updated successfully!",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
