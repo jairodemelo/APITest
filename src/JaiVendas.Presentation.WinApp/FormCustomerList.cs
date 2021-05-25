@@ -15,13 +15,16 @@ namespace JaiVendas.Presentation.WinApp
     {
         private readonly ICustomerAppService _customerAppService;
         private readonly FormCustomerEdit _formCustomerEdit;
+        private readonly FormCustomerAdd _formCustomerAdd;
 
-        public FormCustomerList(ICustomerAppService customerAppService, 
-            FormCustomerEdit formCustomerEdit)
+        public FormCustomerList(ICustomerAppService customerAppService,
+            FormCustomerEdit formCustomerEdit, 
+            FormCustomerAdd formCustomerAdd)
         {
             _customerAppService = customerAppService;
             _formCustomerEdit = formCustomerEdit;
-            InitializeComponent();   
+            _formCustomerAdd = formCustomerAdd;
+            InitializeComponent();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -54,6 +57,12 @@ namespace JaiVendas.Presentation.WinApp
         {
             _formCustomerEdit.LoadCustomer(id);
             _formCustomerEdit.ShowDialog();
+            DoSearch();
+        }
+
+        private void btnAddCustomer_Click(object sender, EventArgs e)
+        {
+            _formCustomerAdd.ShowDialog();
             DoSearch();
         }
     }

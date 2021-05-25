@@ -30,14 +30,15 @@ namespace JaiVendas.Presentation.WinApp
         private void InitializeComponent()
         {
             this.dataGridViewCustomers = new System.Windows.Forms.DataGridView();
-            this.groupBoxSearch = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.textSearch = new System.Windows.Forms.TextBox();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colActive = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBoxSearch = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.textSearch = new System.Windows.Forms.TextBox();
+            this.btnAddCustomer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCustomers)).BeginInit();
             this.groupBoxSearch.SuspendLayout();
             this.SuspendLayout();
@@ -64,10 +65,40 @@ namespace JaiVendas.Presentation.WinApp
             this.dataGridViewCustomers.TabIndex = 0;
             this.dataGridViewCustomers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dataGridViewCustomers_MouseDoubleClick);
             // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colCPF
+            // 
+            this.colCPF.DataPropertyName = "CPF";
+            this.colCPF.HeaderText = "VAT Number";
+            this.colCPF.Name = "colCPF";
+            this.colCPF.ReadOnly = true;
+            // 
+            // colName
+            // 
+            this.colName.DataPropertyName = "Name";
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            // 
+            // colActive
+            // 
+            this.colActive.DataPropertyName = "Active";
+            this.colActive.HeaderText = "Active";
+            this.colActive.Name = "colActive";
+            this.colActive.ReadOnly = true;
+            // 
             // groupBoxSearch
             // 
             this.groupBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxSearch.Controls.Add(this.btnAddCustomer);
             this.groupBoxSearch.Controls.Add(this.label1);
             this.groupBoxSearch.Controls.Add(this.btnSearch);
             this.groupBoxSearch.Controls.Add(this.textSearch);
@@ -104,34 +135,15 @@ namespace JaiVendas.Presentation.WinApp
             this.textSearch.Size = new System.Drawing.Size(594, 23);
             this.textSearch.TabIndex = 0;
             // 
-            // colId
+            // btnAddCustomer
             // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colCPF
-            // 
-            this.colCPF.DataPropertyName = "CPF";
-            this.colCPF.HeaderText = "VAT Number";
-            this.colCPF.Name = "colCPF";
-            this.colCPF.ReadOnly = true;
-            // 
-            // colName
-            // 
-            this.colName.DataPropertyName = "Name";
-            this.colName.HeaderText = "Name";
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            // 
-            // colActive
-            // 
-            this.colActive.DataPropertyName = "Active";
-            this.colActive.HeaderText = "Active";
-            this.colActive.Name = "colActive";
-            this.colActive.ReadOnly = true;
+            this.btnAddCustomer.Location = new System.Drawing.Point(691, 15);
+            this.btnAddCustomer.Name = "btnAddCustomer";
+            this.btnAddCustomer.Size = new System.Drawing.Size(63, 23);
+            this.btnAddCustomer.TabIndex = 2;
+            this.btnAddCustomer.Text = "Add New";
+            this.btnAddCustomer.UseVisualStyleBackColor = true;
+            this.btnAddCustomer.Click += new System.EventHandler(this.btnAddCustomer_Click);
             // 
             // FormCustomerList
             // 
@@ -160,5 +172,6 @@ namespace JaiVendas.Presentation.WinApp
         private System.Windows.Forms.DataGridViewTextBoxColumn colCPF;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colActive;
+        private System.Windows.Forms.Button btnAddCustomer;
     }
 }

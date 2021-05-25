@@ -27,4 +27,10 @@
     <ProjectReference Include="..\JaiVendas.CrossCutting.Infra.IOC\JaiVendas.CrossCutting.Infra.IOC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="FormCustomerAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
