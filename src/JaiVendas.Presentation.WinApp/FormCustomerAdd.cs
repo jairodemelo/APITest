@@ -1,5 +1,7 @@
 ﻿using JaiVendas.Application.Interfaces;
 using JaiVendas.Application.ViewModel.Customers;
+using JaiVendas.Application.ViewModel.Customers.CustomerAddresses;
+using JaiVendas.Application.ViewModel.Customers.CustomerPhones;
 using JaiVendas.CrossCutting.Infra.Environment.Validation;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,21 @@ namespace JaiVendas.Presentation.WinApp
     public partial class FormCustomerAdd : Form
     {
         private readonly ICustomerAppService _customerAppService;
+        private readonly FormCustomerPhone _formCustomerPhone;
 
-        public FormCustomerAdd(ICustomerAppService customerAppService)
+        private ICollection<CustomerAddressAddViewModel> _addresses = new List<CustomerAddressAddViewModel>();
+        private ICollection<CustomerPhoneAddViewModel> _phones = new List<CustomerPhoneAddViewModel>();
+
+
+        public FormCustomerAdd(ICustomerAppService customerAppService, 
+            FormCustomerPhone formCustomerPhone)
         {
             _customerAppService = customerAppService;
+            _formCustomerPhone = formCustomerPhone;
             InitializeComponent();
+
+            dgvAddresses.DataSource = _addresses;
+            dgvPhones.DataSource = _phones;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -32,9 +44,8 @@ namespace JaiVendas.Presentation.WinApp
              CPF = txtVatNumber.Text,
              Name = txtName.Text,
 
-             //Todo: Comming soon
-             //Adresses
-             //Phones
+             Adresses = _addresses,
+             Phones = _phones
          };
 
         private async void DoSave()
@@ -60,8 +71,35 @@ namespace JaiVendas.Presentation.WinApp
         }
 
         private void FormCustomerAdd_Shown(object sender, EventArgs e)
+            => Clear();
+
+        private void Clear()
         {
             this.ClearScreen<TextBox>();
+            _addresses.Clear();
+            _phones.Clear();
         }
+
+        private void AddPhone()
+        {
+            using (new LockControl(this))
+            {
+                var dlgResult = _formCustomerPhone.ShowDialog(FormModeType.Add);
+                if (dlgResult == DialogResult.OK)
+                    _phones.Add(_formCustomerPhone.Phone);
+            }
+        }
+
+        private void EditPhone()
+        {
+            using (new LockControl(this))
+            {
+                //var phone = dgvPhones.Bind
+                //var dlgResult = _formCustomerPhone.ShowDialog(FormModeType.Edit, phone);
+            }
+        }
+
+        private void btnNewPhone_Click(object sender, EventArgs e)
+            => AddPhone();
     }
 }
