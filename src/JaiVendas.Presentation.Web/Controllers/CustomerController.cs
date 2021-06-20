@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using JaiVendas.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,17 @@ namespace JaiVendas.Presentation.Web.Controllers
 {
     public class CustomerController : Controller
     {
-        public IActionResult Index()
+        private readonly ICustomerAppService _customerAppService;
+
+        public CustomerController(ICustomerAppService customerAppService)
         {
-            return View();
+            _customerAppService = customerAppService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var customerList = await _customerAppService.GetAll();
+            return View(customerList);
         }
     }
 }

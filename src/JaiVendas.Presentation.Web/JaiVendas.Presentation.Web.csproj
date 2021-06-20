@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JaiVendas.Application\JaiVendas.Application.csproj" />
+    <ProjectReference Include="..\JaiVendas.CrossCutting.Infra.IOC\JaiVendas.CrossCutting.Infra.IOC.csproj" />
+  </ItemGroup>
+
 </Project>

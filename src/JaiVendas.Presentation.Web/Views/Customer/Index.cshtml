@@ -1,8 +1,10 @@
-﻿@*
+﻿@using JaiVendas.Application.ViewModel.Customers
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+@model IEnumerable<CustomerSimplifyedViewModel>
 <div class="row">
     <div class="col-md-12">
         <h4>Customer List</h4>
@@ -35,6 +37,17 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.CPF</td>
+                        <td>@item.Name</td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>
