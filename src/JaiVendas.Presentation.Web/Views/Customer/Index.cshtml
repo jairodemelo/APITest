@@ -14,14 +14,16 @@
 </div> 
 <div class="row">
     <div class="col-md-6">
+        <!-- Search -->
         <div class="row">
             <div class="col-md-10">
-                <input class="form-control" type="text" name="search" placeholder="Type to search" />
+                <input id="txtSearch" class="form-control" type="text" name="search" placeholder="Type to search" value="@ViewBag.Search" />
             </div>
             <div class="col-md-2">
-                <input class="btn btn-success float-right" type="submit" value="Search" />
+                <button id="btnSearch" class="btn btn-success float-right">Search</button>
             </div>
         </div>
+        <!-- /Search -->
     </div>
     <div class="col-md-6">
         <input class="btn btn-success float-right" type="submit" value="New"/>
@@ -54,3 +56,12 @@
         </table>
     </div>
 </div>
+
+@section Scripts
+{
+    <script language="javascript">
+        $("#btnSearch").click(function () {
+            window.location.href = '@Url.ActionLink("index", "customer")?search=' + $("#txtSearch").val();
+        });
+    </script>
+}

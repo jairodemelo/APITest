@@ -16,9 +16,11 @@ namespace JaiVendas.Presentation.Web.Controllers
             _customerAppService = customerAppService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search = default)
         {
-            var customerList = await _customerAppService.GetAll();
+            ViewBag.Search = search;
+
+            var customerList = await _customerAppService.GetAll(search);
             return View(customerList);
         }
     }
