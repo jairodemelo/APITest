@@ -11,7 +11,15 @@
         <h4>Customer List</h4>
         <br />
     </div>
-</div> 
+</div>
+@if (string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+{
+    <div class="row">
+        <div class="row">
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        </div>
+    </div>
+}
 <div class="row">
     <div class="col-md-6">
         <!-- Search -->
@@ -26,7 +34,7 @@
         <!-- /Search -->
     </div>
     <div class="col-md-6">
-        <input class="btn btn-success float-right" type="submit" value="New"/>
+        <input class="btn btn-success float-right" type="submit" value="New" />
     </div>
 </div>
 <div class="row">
@@ -43,13 +51,13 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr class="@(strip ? "table-secondary" : "") ">
-                    <td>@item.Id</td>
-                    <td>@item.CPF</td>
-                    <td>@item.Name</td>
-                    <td><a class="btn btn-info" href="">Edit</a></td>
-                    <td><a class="btn btn-danger" href="">Remove</a></td>
-                </tr>
+                    <tr class="@(strip ? "table-secondary" : "") ">
+                        <td>@item.Id</td>
+                        <td>@item.CPF</td>
+                        <td>@item.Name</td>
+                        <td><a class="btn btn-info" href="">Edit</a></td>
+                        <td><a class="btn btn-danger" href="@Url.ActionLink("Delete", "Customer")?id=@item.Id">Remove</a></td>
+                    </tr>
                     strip = !strip;
                 }
             </tbody>
