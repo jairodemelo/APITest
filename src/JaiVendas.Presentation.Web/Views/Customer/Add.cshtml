@@ -1,0 +1,48 @@
+﻿@using JaiVendas.Application.ViewModel.Customers
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model CustomerAddViewModel
+<form method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>New Customer</h4>
+            <br />
+        </div>
+    </div>
+    @** Error Message *@
+    @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <strong>Error:</strong><br />
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        </div>
+    }
+    @** /Error Message *@
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <span>CPF:</span>
+                    @Html.TextBoxFor(m => m.CPF, new { Class = "form-control", placeholder = "___.___.___-__" })
+                </div>
+                <div class="col-md-6">
+                    <span>Name:</span>
+                    @Html.TextBoxFor(m => m.Name, new { Class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-success float-right" value="Save" />
+        </div>
+    </div>
+</form>

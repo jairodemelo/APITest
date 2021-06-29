@@ -12,14 +12,19 @@
         <br />
     </div>
 </div>
-@if (string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+@** Error Message *@
+@if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
 {
     <div class="row">
-        <div class="row">
-            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <strong>Error:</strong><br/>
+                @ViewBag.ErrorMessage
+            </div>
         </div>
     </div>
 }
+@** /Error Message *@
 <div class="row">
     <div class="col-md-6">
         <!-- Search -->
@@ -34,7 +39,7 @@
         <!-- /Search -->
     </div>
     <div class="col-md-6">
-        <input class="btn btn-success float-right" type="submit" value="New" />
+        <a class="btn btn-success float-right" href="@Url.ActionLink("Add")">New</a>
     </div>
 </div>
 <div class="row">

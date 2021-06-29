@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JaiVendas.Application.ViewModel.Customers;
 
 namespace JaiVendas.Presentation.Web.Controllers
 {
@@ -20,7 +21,7 @@ namespace JaiVendas.Presentation.Web.Controllers
         public async Task<IActionResult> Index(string search = default, string errorMessage = default)
         {
             ViewBag.Search = search;
-            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.ErrorMessage = ViewData["ErrorMessage"];
 
             var customerList = await _customerAppService.GetAll(search);
             return View(customerList);
@@ -29,9 +30,27 @@ namespace JaiVendas.Presentation.Web.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _customerAppService.Delete(id);
-            return result.IsValid 
-                ? RedirectToAction("Index")
-                : RedirectToAction("Index", new { errorMessage = result.GetErrorMessage() });
+            if (!result.IsValid)
+                ViewData["ErrorMessage"] = result.GetErrorMessage();
+
+            return RedirectToAction("Index");
         }
+
+        public IActionResult Add()
+            => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CustomerAddViewModel customerAddViewModel)
+        {
+            var result = await _customerAppService.Add(customerAddViewModel);
+
+            //Success
+            if (result.ValidationResult.IsValid)
+                return RedirectToAction("Index");
+
+            ViewBag.ErrorMessage = result.ValidationResult.GetErrorMessage();
+            return View(customerAddViewModel);
+        }
+
     }
 }
