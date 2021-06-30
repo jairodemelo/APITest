@@ -13,10 +13,16 @@ namespace JaiVendas.Presentation.Web.Controllers
     {
         private readonly ICustomerAppService _customerAppService;
 
+        #region :: Construtor
+
         public CustomerController(ICustomerAppService customerAppService)
         {
             _customerAppService = customerAppService;
         }
+
+        #endregion
+
+        #region :: Index
 
         public async Task<IActionResult> Index(string search = default, string errorMessage = default)
         {
@@ -27,6 +33,10 @@ namespace JaiVendas.Presentation.Web.Controllers
             return View(customerList);
         }
 
+        #endregion
+
+        #region :: Delete
+
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _customerAppService.Delete(id);
@@ -35,6 +45,10 @@ namespace JaiVendas.Presentation.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        #endregion
+
+        #region :: Add
 
         public IActionResult Add()
             => View();
@@ -52,5 +66,34 @@ namespace JaiVendas.Presentation.Web.Controllers
             return View(customerAddViewModel);
         }
 
+        #endregion
+
+        #region :: Update
+
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var customer = await _customerAppService.GetById(id);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CustomerViewModel customer)
+        {
+            var customerUpdateViewModel = new CustomerUpdateViewModel
+            {
+                Id = customer.Id,
+                Name = customer.Name
+            };
+            var result = await _customerAppService.Update(customerUpdateViewModel);
+
+            //Success
+            if (result.IsValid)
+                return RedirectToAction("Index");
+
+            ViewBag.ErrorMessage = result.GetErrorMessage();
+            return View(customer);
+        }
+
+        #endregion
     }
 }

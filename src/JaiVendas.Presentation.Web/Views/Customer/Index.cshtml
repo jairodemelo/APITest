@@ -60,8 +60,8 @@
                         <td>@item.Id</td>
                         <td>@item.CPF</td>
                         <td>@item.Name</td>
-                        <td><a class="btn btn-info" href="">Edit</a></td>
-                        <td><a class="btn btn-danger" href="@Url.ActionLink("Delete", "Customer")?id=@item.Id">Remove</a></td>
+                        <td><a class="btn btn-info" href="@Url.ActionLink("Update")?id=@item.Id">Edit</a></td>
+                        <td><a class="btn btn-danger" href="@Url.ActionLink("Delete")?id=@item.Id">Remove</a></td>
                     </tr>
                     strip = !strip;
                 }
